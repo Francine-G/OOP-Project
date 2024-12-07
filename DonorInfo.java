@@ -8,13 +8,12 @@ class Donor {
     private String donorEmail;
     private String donationType;
     private String accountName;
-    private int accountNumber;
+    private String accountNumber;  
     private int cashDonationAmount;
     private String[] inKindSupportItems = new String[5];  
     private int[] inKindSupportQuantities = new int[5];     
-    
 
-    public void setUserDetails(int transactionChoice, String donorName, String donationType, String accountName, int accountNumber, int cashDonationAmount) {
+    public void setUserDetails(int transactionChoice, String donorName, String donationType, String accountName, String accountNumber, int cashDonationAmount) {
         this.transactionChoice = transactionChoice;
         this.donorName = donorName;
         this.donationType = donationType;
@@ -114,7 +113,7 @@ public class DonorInfo {
             String donorAddress = scanner.nextLine();
 
             System.out.print("Enter Contact Number: ");
-            String donorContact = scanner.nextLine();
+            String donorContact = getValidContact(scanner);
 
             System.out.print("Enter Personal Email: ");
             String donorEmail = scanner.nextLine();
@@ -153,7 +152,7 @@ public class DonorInfo {
                     System.out.println("                   MAKE A DIFFERENCE TODAY!                    ");
                     System.out.println("Your support helps us bring positive change to those in need.\n"
                     + "By donating, you contribute to initiatives that uplift communities, \n" 
-                    + "provide resources, and create lasting impacts. Together, we can build a brighter future");
+                    + "offer resources, and create lasting impacts. Together, we can build a brighter future");
                     System.out.println("==============================================================================");
                     System.out.println("");
                     
@@ -216,26 +215,25 @@ public class DonorInfo {
                 }
 
                 donor.setDonorDetails(donorName, donorAddress, donorContact, donorEmail);
-                donor.setUserDetails(transactionChoice, donorName, donationType, "N/A", 0, 0);
+                donor.setUserDetails(transactionChoice, donorName, donationType, "N/A", "N/A", 0);
                 donor.donationProcess();
                 break;
             }
+
             
             System.out.println("");
             System.out.println("==============================================================================");
             System.out.println("                   MAKE A DIFFERENCE TODAY!                    ");
             System.out.println("Your support helps us bring positive change to those in need.\n"
             + "By donating, you contribute to initiatives that uplift communities, \n" 
-            + "provide resources, and create lasting impacts. Together, we can build a brighter future");
+            + "offer resources, and create lasting impacts. Together, we can build a brighter future");
             System.out.println("==============================================================================");
             System.out.println("");
 
-            System.out.print("");
             System.out.print("Enter your account name: ");
             String accountName = scanner.nextLine();
-            System.out.print("Enter your account number: ");
-            int accountNumber = Integer.parseInt(scanner.nextLine());
-            System.out.print("");
+            System.out.print("Enter your account number (11-12 digits): ");
+            String accountNumber = getValidAccountNumber(scanner);
 
             System.out.println("\nCash Denomination Options:");
             System.out.println("=====================================");
@@ -272,14 +270,37 @@ public class DonorInfo {
                 System.out.println("Error! Invalid input. Please choose a valid amount.");
                 continue;
             }
-        
 
             donor.setDonorDetails(donorName, donorAddress, donorContact, donorEmail);
             donor.setUserDetails(transactionChoice, donorName, donationType, accountName, accountNumber, cashDonationAmount);
             donor.donationProcess();
             break;
         }
+    }
 
-        scanner.close();
+    private static String getValidContact(Scanner scanner) {
+        String contactNumber;
+        while (true) {
+            contactNumber = scanner.nextLine();
+            if (contactNumber.matches("\\d{11}")) {
+                break;
+            } else {
+                System.out.print("Invalid contact number. It must be exactly 11 digits long. \nPlease re-enter: ");
+            }
+        }
+        return contactNumber;
+    }
+
+    private static String getValidAccountNumber(Scanner scanner) {
+        String accountNumber;
+        while (true) {
+            accountNumber = scanner.nextLine();
+            if (accountNumber.matches("\\d{11,12}")) {
+                break;
+            } else {
+                System.out.print("Invalid account number. It must be 11-12 digits long.\nPlease re-enter: ");
+            }
+        }
+        return accountNumber;
     }
 }

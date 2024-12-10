@@ -186,6 +186,10 @@ class DisasterDisplayInfo {
     }
 }
 
+class transaction{
+    private String trans;
+}
+
 public class VolunteerInfo {
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in);
@@ -297,21 +301,15 @@ public class VolunteerInfo {
         disaster.displayLocationMenu();
 
         System.out.print("Select a location to volunteer: ");
-        int locationIndex = userInput.nextInt() - 1;  
+        int locationIndex = userInput.nextInt() - 1;
         disaster.displayLocationDetails(locationIndex);
 
         volunteer.displayAgreement();
 
-        userInput.nextLine();  
-        System.out.print("Please type 'YES' to agree or 'NO' to decline: ");
-        String agreementResponse = userInput.nextLine();
-
-        if (agreementResponse.equalsIgnoreCase("YES")) {
-            volunteer.displayVolunteerSummary(name, newContact, address);
+        if (volunteer.getAgreementResponse(userInput)) {
+        volunteer.displayVolunteerSummary(name, newContact, address);
         } else {
-            System.out.println("You have declined to volunteer.");
+        System.out.println("You have declined to volunteer.");
         }
-
-        userInput.close();
     }
 }

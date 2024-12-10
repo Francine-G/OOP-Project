@@ -307,7 +307,7 @@ public class VolunteerInfo {
         String agreementResponse = userInput.nextLine();
 
         if (agreementResponse.equalsIgnoreCase("YES")) {
-            volunteer.displayVolunteerSummary(name, contact, address);
+            volunteer.displayVolunteerSummary(name, newContact, address);
         } else {
             System.out.println("You have declined to volunteer.");
         }

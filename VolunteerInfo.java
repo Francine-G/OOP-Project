@@ -111,7 +111,6 @@ class Volunteer {
         System.out.println("you may be exposed to challenging and hazardous conditions. You acknowledge that");
         System.out.println("you are participating of your own free will and take full responsibility for your actions.");
         System.out.println("Your personal safety is of utmost importance, and you agree to follow all safety protocols.");
-        System.out.println("\nPlease type 'YES' to agree or 'NO' to decline: ");
         System.out.println("=====================================================================================\n");
     }
 
@@ -300,12 +299,27 @@ public class VolunteerInfo {
         disaster.displayDisasterDetails();
         disaster.displayLocationMenu();
 
+        System.out.print("Select a location to volunteer (1-7): ");
+        int locationIndex = userInput.nextInt() - 1;  
+
+        while (locationIndex < 0 || locationIndex >= 7) { 
+            System.out.println("Invalid choice. Please select a number between 1 and 7.");
+            System.out.print("Select a location to volunteer (1-7): ");
+            locationIndex = userInput.nextInt() - 1;
+        }
         System.out.print("Select a location to volunteer: ");
         int locationIndex = userInput.nextInt() - 1;
+
         disaster.displayLocationDetails(locationIndex);
 
         volunteer.displayAgreement();
 
+        userInput.nextLine();  
+        System.out.print("Please type 'YES' to agree or 'NO' to decline: ");
+        String agreementResponse = userInput.nextLine();
+
+        if (agreementResponse.equalsIgnoreCase("YES")) {
+            volunteer.displayVolunteerSummary(name, newContact, address);
         if (volunteer.getAgreementResponse(userInput)) {
         volunteer.displayVolunteerSummary(name, newContact, address);
         } else {

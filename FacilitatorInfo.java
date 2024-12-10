@@ -20,9 +20,59 @@ class Facilitator{
     }
 
     public void transactions(){
-        //Hindi ko knows ni T-T
-
-    } 
+        Scanner scanner = New Scanner(System.in);
+        while (true) {
+         System.out.println("Enter the Supply you would like to withdraw: ");
+         int supplyType = scanner.nextInt();
+ 
+         System.out.println("Enter the quantity needed for the supply: ");
+         int supplyQuantity = scanner.nextInt();
+ 
+         switch (supplyType){
+             case 1: //foods
+                 if (supplyQuantity <= food ){
+                     foods -= supplyQuantity 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
+                 }else{
+                         System.out.println("Insufficient Supplies");
+                     }
+         }
+              }
+             case 2: //water
+                 if (supplyQuantity <= water){
+                     foods -= supplyQuantity 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
+                 }else{
+                         System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 3: //medical supplies
+                 if (supplyQuantity <= medicalSupplies){
+                     medicalSupplies -= supplyQuantity 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + medicalSupplies);
+                 }else{
+                     System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 4: //clothing
+                     if (supplyQuantity <= clothing){
+                     clothing -= supplyQuantity 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + clothing);
+                 }else{
+                     System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 3: //others
+                 if (supplyQuantity <= others){
+                     others -= supplyQuantity 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
+                  }else{
+                     System.out.println("Insufficient Supplies");
+                      }   
+        }
+        scanner.close();
+        
+     }
     
     public String getFacilitatorName() {
         return facilitatorName;

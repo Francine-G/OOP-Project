@@ -1,19 +1,1 @@
 
-Donor Name: Gerard
-Donor Address: Oton
-Donor Contact: 09658435684
-Donor Email: personal@gmail.com
-Donation Type: In-Kind Support
-In-Kind Support Details:
-- Food: 200
-- Medical Supplies: 300
-==============================================================================
-Donor Name: Lorraine
-Donor Address: Oton
-Donor Contact: 09875468423
-Donor Email: lori@gmail.com
-Donation Type: Cash
-Cash Amount: P10000
-Account Name: Lorraine Castor
-Account Number: 66542589635
-==============================================================================

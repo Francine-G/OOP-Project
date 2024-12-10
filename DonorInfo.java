@@ -1,4 +1,8 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 class Donor {
     private int transactionChoice;
@@ -8,12 +12,9 @@ class Donor {
     private String donorEmail;
     private String donationType;
     private String accountName;
-<<<<<<< Updated upstream
     private String accountNumber;  
-=======
-    private String accountNumber;  // Changed to String to handle input validation easily
->>>>>>> Stashed changes
     private int cashDonationAmount;
+    private int donorIDCounter = 001;
     private String[] inKindSupportItems = new String[5];  
     private int[] inKindSupportQuantities = new int[5];     
 
@@ -72,6 +73,35 @@ class Donor {
         System.out.println("                   AGAIN, THANK YOU FOR YOUR GENEROSITY!                        ");
         System.out.println("        A copy of your receipt will be sent to your email very shortly.         ");
         System.out.println("==============================================================================\n");
+
+
+        String filePath = "DonorDisplay.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Project\\DonorDisplay.txt", true))) {
+            
+            writer.write("Donor Name: " + donorName + "\n");
+            writer.write("Donor Address: " + donorAddress + "\n");
+            writer.write("Donor Contact: " + donorContact + "\n");
+            writer.write("Donor Email: " + donorEmail + "\n");
+            writer.write("Donation Type: " + donationType + "\n");
+
+            if (donationType.equals("Cash")) {
+                writer.write("Cash Amount: P" + cashDonationAmount + "\n");
+                writer.write("Account Name: " + accountName + "\n");
+                writer.write("Account Number: " + accountNumber + "\n");
+            } else if (donationType.equals("In-Kind Support")) {
+                writer.write("In-Kind Support Details:\n");
+                for (int i = 0; i < inKindSupportItems.length; i++) {
+                    if (inKindSupportItems[i] != null) {
+                        writer.write("- " + inKindSupportItems[i] + ": " + inKindSupportQuantities[i] + "\n");
+                    }
+                }
+            }
+            writer.write("==============================================================================\n");
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println("Error saving donor information to file.");
+            e.printStackTrace();
+        }
     }
 }
 
@@ -224,11 +254,7 @@ public class DonorInfo {
                 break;
             }
 
-<<<<<<< Updated upstream
             // For Cash Donation
-=======
-            
->>>>>>> Stashed changes
             System.out.println("");
             System.out.println("==============================================================================");
             System.out.println("                   MAKE A DIFFERENCE TODAY!                    ");

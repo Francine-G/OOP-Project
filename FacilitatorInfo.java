@@ -1,4 +1,7 @@
 import java.util.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 class Facilitator{
     private String facilitatorName = "Jologs";
@@ -20,18 +23,21 @@ class Facilitator{
     }
 
     public void transactions(){
-        Scanner scanner = New Scanner(System.in);
+
+        int supplyQuantity;
+
+        Scanner scanner = new Scanner(System.in);
         while (true) {
          System.out.println("Enter the Supply you would like to withdraw: ");
          int supplyType = scanner.nextInt();
  
          System.out.println("Enter the quantity needed for the supply: ");
-         int supplyQuantity = scanner.nextInt();
+         supplyQuantity = scanner.nextInt();
  
          switch (supplyType){
              case 1: //foods
-                 if (supplyQuantity <= food ){
-                     foods -= supplyQuantity 
+                 if (supplyQuantity <= foods){
+                     foods -= supplyQuantity;
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
                  }else{
                          System.out.println("Insufficient Supplies");
@@ -70,6 +76,7 @@ class Facilitator{
                      System.out.println("Insufficient Supplies");
                       }   
         }
+        
         scanner.close();
         
      }
@@ -138,6 +145,8 @@ class Facilitator{
     }
 
     public void displayDonors(){
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Projec\\DonorDisplay.txt"));
         
     }
 

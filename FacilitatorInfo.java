@@ -176,14 +176,6 @@ public void transactions() {
                     System.out.println("Insufficient Supplies");
                 }
                 break;
-            
-            case 6: //cancel
-                System.out.println("\nTransaction canceled. Returning to main menu...");
-                break;
-
-            default:
-                    System.out.println("\nInvalid choice. Returning to main menu...");
-                    break;
             }
         }
     }

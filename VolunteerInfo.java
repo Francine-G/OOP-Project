@@ -77,6 +77,8 @@ class Volunteer {
         displayVolunteerType();
         System.out.print("Enter the number of your choice: ");
         int choice = userInput.nextInt();
+        userInput.nextLine(); // Consume the newline character after nextInt()
+
         switch (choice) {
             case 1: volunteerType = "Technical rescue"; break;
             case 2: volunteerType = "Fire response"; break;
@@ -103,7 +105,7 @@ class Volunteer {
         System.out.println("=====================================================================================\n");
     }
 
-     public void displayAgreement() {
+    public void displayAgreement() {
         System.out.println("=====================================================================================");
         System.out.println("                         VOLUNTEER AGREEMENT                                  ");
         System.out.println("=====================================================================================\n");
@@ -125,6 +127,19 @@ class Volunteer {
 
     public static boolean validatePhoneNumber(String phoneNumber) {
         return phoneNumber.matches("\\d{11}");
+    }
+
+    public static String getValidInput(Scanner userInput, String prompt, String regex) {
+        String input;
+        while (true) {
+            System.out.print(prompt);
+            input = userInput.nextLine().trim();
+            if (input.matches(regex)) {
+                return input;
+            } else {
+                System.out.println("Invalid input. Please follow the required format.");
+            }
+        }
     }
 }
 
@@ -199,7 +214,7 @@ public class VolunteerInfo {
         System.out.println("=====================================================================================\n");
         System.out.print("Enter your choice: ");
         int option = userInput.nextInt();
-        userInput.nextLine(); 
+        userInput.nextLine(); // Consume newline character
 
         switch (option) {
             case 1: // Login
@@ -216,106 +231,24 @@ public class VolunteerInfo {
                         System.out.println("Valid Password.\n");
 
                         while (true) {
-                            System.out.print("Enter Contact Number (11-Digits): ");
-                            newContact = userInput.nextLine(); 
-
-                            if (Volunteer.validatePhoneNumber(newContact)) {
-                                System.out.println("Valid Contact.\n");
-
-                                System.out.print("Enter your Address: ");
-                                address = userInput.nextLine(); 
-
-                                SignUp vol = new SignUp(name, pass, newContact, address);
-                                vol.displayLogin();
-                                break; 
-                            } else {
-                                System.out.println("Invalid contact number. It must be exactly 11 digits long.");
-                            }
+                            newContact = Volunteer.getValidInput(userInput, "Enter Contact Number (11-Digits): ", "\\d{11}");
+                            System.out.print("Enter your Address: ");
+                            address = userInput.nextLine();
+                            break;
                         }
-                        break; 
-                    } else {
-                        System.out.println("Invalid password. It must be exactly 6 digits long.");
-                    }
-                }
-                break;
-
-            case 2: // Sign Up
-                System.out.println("");
-                System.out.println("=====================================================================================\n");
-                System.out.print("Create Username (Full Name): ");
-                name = userInput.nextLine();
-
-                String newPassword;
-                while (true) {
-                    System.out.print("Create Password (6-digits): ");
-                    newPassword = userInput.nextLine();
-                    if (Volunteer.validatePassword(newPassword)) { 
-                        System.out.println("Password Accepted!\n");
-                        break; 
-                    } else {
-                        System.out.println("Invalid password. It must be exactly 6 digits long.");
-                    }
-                }
-
-                while (true) {
-                    System.out.print("Enter Contact Number (11-Digits): ");
-                    newContact = userInput.nextLine(); 
-
-                    if (Volunteer.validatePhoneNumber(newContact)) {
-                        System.out.println("Contact Accepted!.\n");
                         break;
                     } else {
-                        System.out.println("Invalid contact number. It must be exactly 11 digits long.");
+                        System.out.println("Invalid password. Password should be 6 digits.");
                     }
                 }
 
-                System.out.print("Enter your Address: ");
-                address = userInput.nextLine();
+                SignUp volunteerSignUp = new SignUp(name, pass, newContact, address);
+                volunteerSignUp.displayLogin();
 
-                SignUp newVolunteer = new SignUp(name, newPassword, newContact, address);
-                newVolunteer.displayLogin();
+                break;
+            case 2: // Sign Up
                 break;
 
-            default:
-                System.out.println("Invalid choice.");
-                break;
-        }
-
-
-        Volunteer volunteer = new Volunteer();
-        volunteer.setVolunteerType("");
-        volunteer.selectVolunteerType(userInput);
-
-        DisasterDisplayInfo disaster = new DisasterDisplayInfo(
-            new String[] {"Cebu City", "Metro Manila", "Iloilo City", "Cavite", "Davao City", "Palawan", "Baguio"},
-            new String[] {"Typhoon", "Flood", "Earthquake", "Volcanic Eruption", "Landslide", "Forest Fire", "Tsunami"},
-            new int[] {10, 35, 64, 21, 33, 99, 256}
-        );
-
-        disaster.displayDisasterDetails();
-        disaster.displayLocationMenu();
-
-        System.out.print("Select a location to volunteer (1-7): ");
-        int locationIndex = userInput.nextInt() - 1;  
-
-        while (locationIndex < 0 || locationIndex >= 7) { 
-            System.out.println("Invalid choice. Please select a number between 1 and 7.");
-            System.out.print("Select a location to volunteer (1-7): ");
-            locationIndex = userInput.nextInt() - 1;
-        }
-
-        disaster.displayLocationDetails(locationIndex);
-
-        volunteer.displayAgreement();
-
-        userInput.nextLine();  
-        System.out.print("Please type 'YES' to agree or 'NO' to decline: ");
-        String agreementResponse = userInput.nextLine();
-
-        if (agreementResponse.equalsIgnoreCase("YES")) {
-            volunteer.displayVolunteerSummary(name, newContact, address);
-        } else {
-            System.out.println("You have declined to volunteer.");
         }
     }
 }

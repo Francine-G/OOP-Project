@@ -47,7 +47,7 @@ class Facilitator{
 
     public void displayDisasterDetails(){
         
-        System.out.println("\n======================================================================");
+        System.out.println("\n====================================================================");
         System.out.println("         Location              Disaster             Population Size     ");
         System.out.println("======================================================================");
 
@@ -59,7 +59,7 @@ class Facilitator{
 
     public void displayInventories(int food, int water, int medicalSupplies, int clothing){
         System.out.println(" ");
-        System.out.println("\n=======================================================================================================================================================");
+        System.out.println("\n=====================================================================================================================================================");
         System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
         System.out.println("=======================================================================================================================================================");
         System.out.println("Range of Size            Citizens Affected             Foods             Water             Medical Supplies             Clothing             Status");
@@ -79,12 +79,20 @@ class Facilitator{
     public void processTransactions(int food, int water, int medicalSupplies, int clothing, int others){
         Scanner scanner = new Scanner (System.in);
         while (true) {
-         System.out.println("Enter the Supply you would like to withdraw: ");
-         int supplyType = scanner.nextInt();
- 
+            System.out.println(" ");
+        System.out.println("\n==============================================================================================================================");
+        System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
+        System.out.println("================================================================================================================================");
+        System.out.println("                   1.Foods             2.Water             3.Medical Supplies             4.Clothing               5.Others     ");
+        System.out.println("================================================================================================================================");
+        System.out.println(" ");
+   
+        System.out.println("Enter the Supply you would like to withdraw: ");
+        int supplyType = scanner.nextInt();
+     
          System.out.println("Enter the quantity needed for the supply: ");
          int supplyQuantity = scanner.nextInt();
- 
+
          switch (supplyType){
              case 1: //foods
                  if (supplyQuantity <= food){
@@ -93,7 +101,6 @@ class Facilitator{
                  }else{
                          System.out.println("Insufficient Supplies");
                      }
-                }
              case 2: //water
                  if (supplyQuantity <= water){
                      water -= supplyQuantity;
@@ -124,7 +131,9 @@ class Facilitator{
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
                   }else{
                      System.out.println("Insufficient Supplies");
-                      }   
+                  }
+             }
+        }
      }
         
 

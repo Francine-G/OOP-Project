@@ -433,7 +433,7 @@ public class FacilitatorInfo{
                 
                     switch (choice) {
                         case 1:
-                            facilitator.processTransactions();
+                            facilitator.transactions();
                             break;
                         case 2:
                             facilitator.displayInventories();

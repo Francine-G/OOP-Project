@@ -187,7 +187,7 @@ class DisasterDisplayInfo {
 
 public class VolunteerInfo {
     public static void main(String[] args) {
-        Scanner userInput = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         String name = "";
         String address = ""; 
@@ -198,32 +198,32 @@ public class VolunteerInfo {
         System.out.println("    |===== 1. Log-In =====|                   |===== 2. Sign Up =====|");
         System.out.println("=====================================================================================\n");
         System.out.print("Enter your choice: ");
-        int option = userInput.nextInt();
-        userInput.nextLine(); 
+        int option = scanner.nextInt();
+        scanner.nextLine(); 
 
         switch (option) {
             case 1: // Login
                 System.out.println("");
                 System.out.println("=====================================================================================\n");
                 System.out.print("Enter Username (Full Name): ");
-                name = userInput.nextLine();
+                name = scanner.nextLine();
 
                 String pass;
                 while (true) {
                     System.out.print("Enter Password (6-digits): ");
-                    pass = userInput.nextLine();
+                    pass = scanner.nextLine();
                     if (Volunteer.validatePassword(pass)) { 
                         System.out.println("Valid Password.\n");
 
                         while (true) {
                             System.out.print("Enter Contact Number (11-Digits): ");
-                            newContact = userInput.nextLine(); 
+                            newContact = scanner.nextLine(); 
 
                             if (Volunteer.validatePhoneNumber(newContact)) {
                                 System.out.println("Valid Contact.\n");
 
                                 System.out.print("Enter your Address: ");
-                                address = userInput.nextLine(); 
+                                address = scanner.nextLine(); 
 
                                 SignUp vol = new SignUp(name, pass, newContact, address);
                                 vol.displayLogin();
@@ -243,12 +243,12 @@ public class VolunteerInfo {
                 System.out.println("");
                 System.out.println("=====================================================================================\n");
                 System.out.print("Create Username (Full Name): ");
-                name = userInput.nextLine();
+                name = scanner.nextLine();
 
                 String newPassword;
                 while (true) {
                     System.out.print("Create Password (6-digits): ");
-                    newPassword = userInput.nextLine();
+                    newPassword = scanner.nextLine();
                     if (Volunteer.validatePassword(newPassword)) { 
                         System.out.println("Password Accepted!\n");
                         break; 
@@ -259,7 +259,7 @@ public class VolunteerInfo {
 
                 while (true) {
                     System.out.print("Enter Contact Number (11-Digits): ");
-                    newContact = userInput.nextLine(); 
+                    newContact = scanner.nextLine(); 
 
                     if (Volunteer.validatePhoneNumber(newContact)) {
                         System.out.println("Contact Accepted!.\n");
@@ -270,7 +270,7 @@ public class VolunteerInfo {
                 }
 
                 System.out.print("Enter your Address: ");
-                address = userInput.nextLine();
+                address = scanner.nextLine();
 
                 SignUp newVolunteer = new SignUp(name, newPassword, newContact, address);
                 newVolunteer.displayLogin();
@@ -284,7 +284,7 @@ public class VolunteerInfo {
 
         Volunteer volunteer = new Volunteer();
         volunteer.setVolunteerType("");
-        volunteer.selectVolunteerType(userInput);
+        volunteer.selectVolunteerType(scanner);
 
         DisasterDisplayInfo disaster = new DisasterDisplayInfo(
             new String[] {"Cebu City", "Metro Manila", "Iloilo City", "Cavite", "Davao City", "Palawan", "Baguio"},
@@ -296,21 +296,21 @@ public class VolunteerInfo {
         disaster.displayLocationMenu();
 
         System.out.print("Select a location to volunteer (1-7): ");
-        int locationIndex = userInput.nextInt() - 1;  
+        int locationIndex = scanner.nextInt() - 1;  
 
         while (locationIndex < 0 || locationIndex >= 7) { 
             System.out.println("Invalid choice. Please select a number between 1 and 7.");
             System.out.print("Select a location to volunteer (1-7): ");
-            locationIndex = userInput.nextInt() - 1;
+            locationIndex = scanner.nextInt() - 1;
         }
 
         disaster.displayLocationDetails(locationIndex);
 
         volunteer.displayAgreement();
 
-        userInput.nextLine();  
+        scanner.nextLine();  
         System.out.print("Please type 'YES' to agree or 'NO' to decline: ");
-        String agreementResponse = userInput.nextLine();
+        String agreementResponse = scanner.nextLine();
 
         if (agreementResponse.equalsIgnoreCase("YES")) {
             volunteer.displayVolunteerSummary(name, newContact, address);

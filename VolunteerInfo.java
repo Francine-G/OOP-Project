@@ -248,8 +248,7 @@ public class VolunteerInfo {
                 break;
             case 2: // Sign Up
                 break;
-            default:
-                System.out.println("Invalid option.");
+
         }
     }
 }

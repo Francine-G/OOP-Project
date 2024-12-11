@@ -177,8 +177,10 @@ public void transactions() {
                 break;
             
             case 6: //cancel
+                if (supplyType >= 6){
                 System.out.println("\nTransaction canceled. Returning to main menu...");
                 break;
+                }
 
             default:
                     System.out.println("\nInvalid choice. Returning to main menu...");

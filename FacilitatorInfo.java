@@ -19,7 +19,7 @@ class Facilitator{
 
     }
 
-    public void transactions(){
+    public void transactions(){}
         
     
     public String getFacilitatorName() {
@@ -92,8 +92,8 @@ class Facilitator{
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
                  }else{
                          System.out.println("Insufficient Supplies");
-                     }
-             }
+                     } 
+                 }
               }
              case 2: //water
                  if (supplyQuantity <= water){
@@ -131,7 +131,6 @@ class Facilitator{
         
      }
         
-    }
 
     public void displayVolunteers(){
        

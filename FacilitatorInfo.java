@@ -76,7 +76,7 @@ class Facilitator{
         }
     }
 
-    public void processTransactions(int food, int water, int medicalSupplies, int clothing int others){
+    public void processTransactions(int food, int water, int medicalSupplies, int clothing, int others){
         Scanner scanner = Facilitator.processTransactions();
         while (true) {
          System.out.println("Enter the Supply you would like to withdraw: ");
@@ -88,7 +88,7 @@ class Facilitator{
          switch (supplyType){
              case 1: //foods
                  if (supplyQuantity <= food){
-                     foods -= supplyQuantity; 
+                     food -= supplyQuantity; 
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
                  }else{
                          System.out.println("Insufficient Supplies");
@@ -98,7 +98,7 @@ class Facilitator{
               }
              case 2: //water
                  if (supplyQuantity <= water){
-                     foods -= supplyQuantity;
+                     water -= supplyQuantity;
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
                  }else{
                          System.out.println("Insufficient Supplies");

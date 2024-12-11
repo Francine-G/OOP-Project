@@ -16,7 +16,8 @@ class Facilitator{
     private int water;
     private int medicalSupplies;
     private int clothing;
-    private int others;
+    private String[] others;
+    private int othersQuantity;
 
 
 
@@ -74,8 +75,9 @@ public void transactions() {
 
                 case 2: // View List of Volunteers
                     System.out.println("\nList of Volunteers:");
-                    System.out.printf("%-5s | %-20s | %-20s | %-20s\n", "No.", "Name", "Contact Info", "Preferred Location");
-                    System.out.println("-------------------------------------------------------------------------------");
+                    System.out.printf("%-5s | %-20s | %-20s | %-20s | %-20s\n", "No.", "Name", "Volunteer Type", "Contact Info", "Preferred Location");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                    displayVolunteers("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Project\\VolunteerDatabase.txt", "volunteerType");
                     break;
 
                 default:
@@ -143,13 +145,17 @@ public void transactions() {
             return;
         }
         
-        System.out.println("\n======================================================================");
-        System.out.println("         Location              Disaster             Population Size     ");
-        System.out.println("======================================================================");
+        System.out.println("\n=====================================================================================");
+        System.out.println("|         Location        |          Disaster            |       Population Size    | ");
+        System.out.println("=====================================================================================");
 
-        for(int i = 0; i < location.length && i < disasterType.length && i < popSize.length; i++){
-            System.out.println("         " +location[i] + "              " + disasterType[i] + "             " + popSize[i] + "     " );
+        for (int i = 0; i < location.length && i < disasterType.length && i < popSize.length; i++) {
+            System.out.printf("%-25s %-28s %-29s|%n", "|          " + location[i], "|          " + disasterType[i], "  |          " + popSize[i]);
+
         }
+
+        System.out.println("=====================================================================================");
+        System.out.println("");
         
     }
 
@@ -202,22 +208,54 @@ public void transactions() {
         return;
     }
 
-        System.out.println(" ");
-        System.out.println("\n=======================================================================================================================================================");
-        System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
-        System.out.println("=======================================================================================================================================================");
-        System.out.println("Range of Size            Citizens Affected             Foods             Water             Medical Supplies             Clothing             Status");
-        System.out.println("=======================================================================================================================================================");
-        System.out.println(" ");
+        int[][] ranges = {
+            {1, 30},
+            {31, 60},
+            {61, 90},
+            {91, 120},
+            {121, 150},
+            {151, 180},
+            {181, 210}
+        };
 
-        for(int i = 0; i < popSize.length; i++){
-            if  (10 < popSize[i] && popSize[i] < 20){
-                System.out.println("10-20" + "             "+ popSize[i] + "             " + food + "             " + water + "             " + medicalSupplies + "             " + clothing + "             " + "Sufficient");
-            } else {
-                System.out.println("10-20" + "             "+ popSize[i] + "             " + food + "             " + water + "             " + medicalSupplies + "             " + clothing + "             " + "Insufficient");
-            }
+        System.out.println("\n=======================================");
+        System.out.println("|      RANGES OF POPULATION SIZE      |");
+        System.out.println("=======================================");
 
+        for (int i = 0; i < ranges.length; i++) { 
+            int min = ranges[i][0];
+            int max = ranges[i][1];
+            System.out.println(String.format("|             %3d - %3d               |", min, max));
         }
+        
+        
+        System.out.println("=======================================");
+
+        System.out.println(" ");
+        System.out.println("\n============================================================================================================================================================================");
+        System.out.println("|                                                                      RELIEF GOODS AND SUPPLIES                                                                           |");
+        System.out.println("============================================================================================================================================================================");
+        System.out.println("|     No. of Affected Citizens  |       Foods       |      Water       |   Medical Supplies  |     Clothing     |            Others             |           Status         |");
+        System.out.println("============================================================================================================================================================================");
+
+        int othersIndex = 0;
+
+        for (int i = 0; i < popSize.length; i++) { 
+            int pop = popSize[i]; 
+            
+            int min = ranges[i][0];
+            int max = ranges[i][1];
+
+            String status = (pop >= min && pop <= max) ? "Sufficient" : "Insufficient"; 
+            String othersValue = othersIndex < others.length ? others[othersIndex] : ""; 
+            System.out.println(String.format("|             %3d               |        %3d       |       %3d       |         %3d        |       %3d       |     %21s     |      %15s     |", 
+            pop, food, water, medicalSupplies, clothing, othersValue, status));
+            
+            othersIndex++; 
+        }
+
+        System.out.println("============================================================================================================================================================================");
+        System.out.println("");
     }
 
     public void processTransactions(){
@@ -232,20 +270,19 @@ public void transactions() {
  
          switch (supplyType){
              case 1: //foods
-                 if (supplyQuantity <= food ){
+                 if (supplyQuantity <= food){
                      food -= supplyQuantity; 
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
                  }else{
                          System.out.println("Insufficient Supplies");
                 } 
-                 
-              
+
              case 2: //water
                  if (supplyQuantity <= water){
-                     food -= supplyQuantity;
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
+                    food -= supplyQuantity;
+                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
                  }else{
-                         System.out.println("Insufficient Supplies");
+                        System.out.println("Insufficient Supplies");
                      }
  
              case 3: //medical supplies
@@ -265,9 +302,9 @@ public void transactions() {
                      }
  
              case 5: //others
-                 if (supplyQuantity <= others){
-                     others -= supplyQuantity; 
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
+                 if (supplyQuantity <= othersQuantity){
+                     othersQuantity -= supplyQuantity; 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + othersQuantity);
                   }else{
                      System.out.println("Insufficient Supplies");
                     }   
@@ -277,11 +314,37 @@ public void transactions() {
 
         
     }
-        
-    
 
-    public void displayVolunteers(){
-       
+    public void displayVolunteers(String filePath, String type){
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean donorFound = false;
+    
+            System.out.println("==================================================================");
+            System.out.println("|                         LIST OF VOLUNTEERS                    |");
+            System.out.println("==================================================================");
+    
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("Volunteer Type: " + type)) {
+                    donorFound = true;
+    
+                    // Print donor details
+                    System.out.println(line); // Volunteer Type line
+                    while ((line = reader.readLine()) != null && !line.startsWith("Volunteer Type:")) {
+                        System.out.println(line); // Print each subsequent line until the next "Volunteer Type" or EOF
+                    }
+    
+                    System.out.println("------------------------------------------------------------------");
+                }
+            }
+    
+            if (!donorFound) {
+                System.out.println("No " + type + " donors found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the donor information file.");
+            e.printStackTrace();
+        }
     }
 
     public void displayDonors(String filePath, String type){    
@@ -350,7 +413,7 @@ public class FacilitatorInfo{
                     System.out.println("                                        FACILITATOR DASHBOARD                            ");
                     System.out.println("        |===== 1. View Transactions =====|                  |===== 2. View Inventories =====|");
                     System.out.println("      |===== 3. View Disaster Reports =====|            |===== 4. View Volunteers & Donors=====|");
-                    System.out.println("                         |===== 5. Add Disaster Details =====|                                  ");
+                    System.out.println("       |===== 5. Add Disaster Details =====|                                  ");
                     System.out.println("=====================================================================================================");
                     System.out.println(" ");
                 

@@ -1,0 +1,11 @@
+Volunteer Name: ff\
+Contact Number: 12345678900
+Address: h
+Volunteer Type: Technical rescue
+==============================================================================
+==============================================================================
+Volunteer Name: gero tabiolo
+Contact Number: 12345678900
+Address: tubungan 
+Volunteer Type: Logistical support
+==============================================================================

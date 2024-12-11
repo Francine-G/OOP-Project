@@ -140,6 +140,7 @@ public void transactions() {
                 }else{
                         System.out.println("Insufficient Supplies");
                     }
+                    break;
             case 2: //water
                 if (supplyQuantity <= water){
                     water -= supplyQuantity;
@@ -147,6 +148,7 @@ public void transactions() {
                 }else{
                         System.out.println("Insufficient Supplies");
                     }
+                    break;
 
             case 3: //medical supplies
                 if (supplyQuantity <= medicalSupplies){
@@ -155,6 +157,7 @@ public void transactions() {
                 }else{
                     System.out.println("Insufficient Supplies");
                     }
+                    break;
 
             case 4: //clothing
                     if (supplyQuantity <= clothing){
@@ -163,6 +166,7 @@ public void transactions() {
                 }else{
                     System.out.println("Insufficient Supplies");
                     }
+                    break;
 
             case 5: //others
                 if (supplyQuantity <= others){
@@ -171,6 +175,7 @@ public void transactions() {
                 }else{
                     System.out.println("Insufficient Supplies");
                 }
+                break;
             }
         }
     }

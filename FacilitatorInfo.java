@@ -34,10 +34,10 @@ class Facilitator{
 public void transactions() {
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println("================================================================================================================");
+    System.out.println("==================================================================================================================================================");
     System.out.println("                                                  ENTER TRANSACTION                                             ");
-    System.out.println("    |===== 1. See Donors & Volunteers =====|    |===== 2. View Donations =====|    |===== 3. Cancel =====|");
-    System.out.println("================================================================================================================");
+    System.out.println("    |===== 1. See Donors & Volunteers =====|    |===== 2. View Donations =====|    |===== 3. Create Transaction  =====|    |===== 4. Cancel =====|");
+    System.out.println("==================================================================================================================================================");
 
     System.out.print("Enter your choice (1, 2, or 3): ");
     int choice = scanner.nextInt();

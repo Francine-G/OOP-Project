@@ -127,9 +127,6 @@ class Facilitator{
                   }else{
                      System.out.println("Insufficient Supplies");
                       }   
-        }
-        scanner.close()
-        
      }
         
 

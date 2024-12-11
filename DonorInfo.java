@@ -14,7 +14,6 @@ class Donor {
     private String accountName;
     private String accountNumber;  
     private int cashDonationAmount;
-    private int donorIDCounter = 001;
     private String[] inKindSupportItems = new String[5];  
     private int[] inKindSupportQuantities = new int[5];     
 
@@ -74,8 +73,6 @@ class Donor {
         System.out.println("        A copy of your receipt will be sent to your email very shortly.         ");
         System.out.println("==============================================================================\n");
 
-
-        String filePath = "DonorDisplay.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Project\\DonorDisplay.txt", true))) {
             
             writer.write("Donor Name: " + donorName + "\n");

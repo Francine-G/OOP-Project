@@ -33,12 +33,12 @@ class Facilitator{
 public void transactions() {
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println("================================================================================================================");
+    System.out.println("==================================================================================================================================================");
     System.out.println("                                                  ENTER TRANSACTION                                             ");
-    System.out.println("    |===== 1. See Donors & Volunteers =====|    |===== 2. View Donations =====|    |===== 3. Cancel =====|");
-    System.out.println("================================================================================================================");
+    System.out.println("    |===== 1. See Donors & Volunteers =====|    |===== 2. View Donations =====|    |===== 3. Create Transaction  =====|    |===== 4. Cancel =====|");
+    System.out.println("==================================================================================================================================================");
 
-    System.out.print("Enter your choice (1, 2, or 3): ");
+    System.out.print("Enter your choice (1-4): ");
     int choice = scanner.nextInt();
     scanner.nextLine(); // Consume newline
 
@@ -101,8 +101,10 @@ public void transactions() {
                 System.out.println("\nInvalid choice. Returning to main menu...");
             }
             break;
+            
+        case 3: //trasaction process
 
-        case 3: // Cancel
+        case 4: // Cancel
             System.out.println("\nTransaction canceled. Returning to main menu...");
             break;
 
@@ -219,15 +221,8 @@ public void transactions() {
 
         }
     }
-
-<<<<<<< HEAD
     public void processTransactions(int food, int water, int medicalSupplies, int clothing, int others){
         Scanner scanner = new Scanner (System.in);
-=======
-    public void processTransactions(){
-
-        Scanner scanner = new Scanner(System.in);
->>>>>>> 21e9144884cfeadd197f32e5f413c8d7ff818687
         while (true) {
             System.out.println(" ");
         System.out.println("\n==============================================================================================================================");
@@ -245,28 +240,15 @@ public void transactions() {
 
          switch (supplyType){
              case 1: //foods
-<<<<<<< HEAD
                  if (supplyQuantity <= food){
-=======
-                 if (supplyQuantity <= food ){
->>>>>>> 21e9144884cfeadd197f32e5f413c8d7ff818687
                      food -= supplyQuantity; 
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
                  }else{
                          System.out.println("Insufficient Supplies");
-<<<<<<< HEAD
                      }
              case 2: //water
                  if (supplyQuantity <= water){
                      water -= supplyQuantity;
-=======
-                } 
-                 
-              
-             case 2: //water
-                 if (supplyQuantity <= water){
-                     food -= supplyQuantity;
->>>>>>> 21e9144884cfeadd197f32e5f413c8d7ff818687
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
                  }else{
                          System.out.println("Insufficient Supplies");
@@ -294,25 +276,12 @@ public void transactions() {
                      System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
                   }else{
                      System.out.println("Insufficient Supplies");
-<<<<<<< HEAD
                   }
              }
         }
      }
 
      
-=======
-                    }   
-            }
-
-        }
-
-        
-    }
-        
-    
-
->>>>>>> 21e9144884cfeadd197f32e5f413c8d7ff818687
     public void displayVolunteers(){
        
     }

@@ -1,7 +1,12 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 class Facilitator{
-    private String facilitatorName = "Jologs";
+    private String facilitatorName;
     private int pin;
     private String[] location;
     private String[] disasterType;
@@ -37,7 +42,7 @@ public void transactions() {
             System.out.print("Enter your choice (1 or 2): ");
             int subChoice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
-
+            
             switch (subChoice) {
                 case 1: // View List of Donors
                     System.out.println("\n|===== 1. In-Kind =====|    |===== 2. Cash =====|");
@@ -49,16 +54,13 @@ public void transactions() {
                         System.out.println("\nList of In-Kind Donors:");
                         System.out.printf("%-5s | %-30s\n", "No.", "Donor Name");
                         System.out.println("-------------------------------------");
-                        for (int i = 0; i < inKindDonors.length; i++) {
-                            System.out.printf("%-5d | %-30s\n", (i + 1), inKindDonors[i]);
-                        }
+                        displayDonors("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Project\\DonorDisplay.txt", "In-Kind Support");
+
                     } else if (donorChoice == 2) {
                         System.out.println("\nList of Cash Donors:");
                         System.out.printf("%-5s | %-30s\n", "No.", "Donor Name");
                         System.out.println("-------------------------------------");
-                        for (int i = 0; i < cashDonors.length; i++) {
-                            System.out.printf("%-5d | %-30s\n", (i + 1), cashDonors[i]);
-                        }
+                        displayDonors("C:\\Users\\Francine\\OneDrive\\Desktop\\2nd Year 1st Sem\\OOP-Project\\DonorDisplay.txt", "Cash");
                     } else {
                         System.out.println("\nInvalid choice. Returning to main menu...");
                     }
@@ -68,13 +70,6 @@ public void transactions() {
                     System.out.println("\nList of Volunteers:");
                     System.out.printf("%-5s | %-20s | %-20s | %-20s\n", "No.", "Name", "Contact Info", "Preferred Location");
                     System.out.println("-------------------------------------------------------------------------------");
-                    for (int i = 0; i < volunteers.length; i++) {
-                        System.out.printf("%-5d | %-20s | %-20s | %-20s\n", 
-                                          (i + 1), 
-                                          volunteers[i].name, 
-                                          volunteers[i].contactInfo, 
-                                          volunteers[i].preferredLocation);
-                    }
                     break;
 
                 default:
@@ -90,14 +85,12 @@ public void transactions() {
             scanner.nextLine(); // Consume newline
 
             if (donationChoice == 1) {
-                System.out.printf("\nTotal Cash Balance: %.2f\n", cashBalance);
+                System.out.printf("\nTotal Cash Balance: %.2f\n");
             } else if (donationChoice == 2) {
                 System.out.println("\nSupplies Balance:");
                 System.out.printf("%-20s | %-10s\n", "Item", "Quantity");
                 System.out.println("-----------------------------------");
-                for (int i = 0; i < supplies.length; i++) {
-                    System.out.printf("%-20s | %-10d\n", supplies[i].itemName, supplies[i].quantity);
-                }
+                
             } else {
                 System.out.println("\nInvalid choice. Returning to main menu...");
             }
@@ -176,12 +169,40 @@ public void transactions() {
        
     }
 
-    public void displayDonors(){    
-        
+    public void displayDonors(String filePath, String type){    
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean donorFound = false;
+    
+            System.out.println("==================================================================");
+            System.out.println("                LIST OF " + (type.equals("Cash") ? "CASH" : "IN-KIND") + " DONORS");
+            System.out.println("==================================================================");
+    
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("Donation Type: " + type)) {
+                    donorFound = true;
+    
+                    // Print donor details
+                    System.out.println(line); // Donation Type line
+                    while ((line = reader.readLine()) != null && !line.startsWith("Donation Type:")) {
+                        System.out.println(line); // Print each subsequent line until the next "Donation Type" or EOF
+                    }
+    
+                    System.out.println("------------------------------------------------------------------");
+                }
+            }
+    
+            if (!donorFound) {
+                System.out.println("No " + type + " donors found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the donor information file.");
+            e.printStackTrace();
+        }
     }
 
     public void displayFaciSummary(){
-
+       
     }
 }
 
@@ -189,12 +210,75 @@ public class FacilitatorInfo{
     
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner (System.in);
+        Scanner scanner = new Scanner(System.in);
 
+        Facilitator facilitator = new Facilitator("Francine", 1234, args, args, null, 0);
+
+        while (true) {
+            if (facilitator != null) {
+                System.out.println("Hello, facilitator " + facilitator.getFacilitatorName() + "!");
+
+                while (true) {
+                    System.out.println("Please enter your PIN number: ");
+                    int pin = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    if (facilitator.getPin() == pin) {
+                        break; // Exit PIN entry loop once PIN is correct
+                    } else {
+                        System.out.println("Incorrect PIN. Please try again.");
+                    }
+                }
+
+                while (true) {
+                    System.out.println(" ");
+                    System.out.println("\n====================================================================================================");
+                    System.out.println("                                        FACILITATOR DASHBOARD                            ");
+                    System.out.println("        |===== 1. View Transactions =====|                  |===== 2. View Inventories =====|");
+                    System.out.println("      |===== 3. View Disaster Reports =====|            |===== 4. View Volunteers & Donors=====|");
+                    System.out.println("=====================================================================================================");
+                    System.out.println(" ");
+
+                    System.out.print("Enter your choice: ");
+                    int choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    switch (choice) {
+                        case 1:
+                            facilitator.processTransactions();
+                            break;
+                        case 2:
+                            facilitator.displayInventories(1000, 1000, 550, 450);
+                            break;
+                        case 3:
+                            facilitator.displayDisasterDetails();
+                            break;
+                        case 4:
+                            facilitator.transactions();
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                    }
+
+                    System.out.println("");
+                    System.out.println("Would you like to do another transaction? (yes/no) ");
+                    String response = scanner.nextLine().toLowerCase();
+                    if (response.equals("no")) {
+                        System.out.println(". . . You are now exiting the program. Thank you! . . . ");
+                        System.exit(0);
+                    } else if (!response.equals("yes")) {
+                        System.out.println("Invalid input. Returning to the dashboard.");
+                    }
+                }
+            } else {
+                System.out.println("Facilitator not found.");
+                break;
+            }
+        }
         
-
-      
+       
     }
 
     
 }
+

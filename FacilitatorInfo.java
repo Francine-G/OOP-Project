@@ -105,16 +105,89 @@ public void transactions() {
             break;
 
         case 3: //trasaction process
-
+            processTransactions(100, 200, 3100, 500, 71);
+       
         case 4: // Cancel
-            System.out.println("\nTransaction canceled. Returning to main menu...");
-            break;
 
         default:
             System.out.println("\nInvalid choice. Please try again.");
             break;
     }
 }
+
+    public void processTransactions(int food, int water, int medicalSupplies, int clothing, int others){
+    Scanner scanner = new Scanner (System.in);
+        while (true) {
+            System.out.println(" ");
+        System.out.println("\n======================================================================================================================================================");
+        System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
+        System.out.println("========================================================================================================================================================");
+        System.out.println("                   1.Foods             2.Water             3.Medical Supplies             4.Clothing               5.Others               6.Cancel      ");
+        System.out.println("========================================================================================================================================================");
+        System.out.println(" ");
+
+        System.out.println("Enter the Supply you would like to withdraw: ");
+        int supplyType = scanner.nextInt();
+    
+        System.out.println("Enter the quantity needed for the supply: ");
+        int supplyQuantity = scanner.nextInt();
+
+        switch (supplyType){
+            case 1: //foods
+                if (supplyQuantity <= food){
+                    food -= supplyQuantity; 
+                    System.out.println("You have withdrawn " + supplyQuantity + " from food, " + "remaining supplies: " + food );
+                }else{
+                        System.out.println("Insufficient Supplies");
+                    }
+                    break;
+            case 2: //water
+                if (supplyQuantity <= water){
+                    water -= supplyQuantity;
+                    System.out.println("You have withdrawn " + supplyQuantity + " from water, " + "remaining supplies: " + water);
+                }else{
+                        System.out.println("Insufficient Supplies");
+                    }
+                    break;
+
+            case 3: //medical supplies
+                if (supplyQuantity <= medicalSupplies){
+                    medicalSupplies -= supplyQuantity; 
+                    System.out.println("You have withdrawn " + supplyQuantity + " from medical supplies, " + "remaining supplies: " + medicalSupplies);
+                }else{
+                    System.out.println("Insufficient Supplies");
+                    }
+                    break;
+
+            case 4: //clothing
+                    if (supplyQuantity <= clothing){
+                    clothing -= supplyQuantity; 
+                    System.out.println("You have withdrawn " + supplyQuantity + " from clothing, " + " remaining supplies: " + clothing);
+                }else{
+                    System.out.println("Insufficient Supplies");
+                    }
+                    break;
+
+            case 5: //others
+                if (supplyQuantity <= others){
+                    others -= supplyQuantity; 
+                    System.out.println("You have withdrawn " + supplyQuantity +  " from others, " + "remaining supplies: " + others);
+                }else{
+                    System.out.println("Insufficient Supplies");
+                }
+                break;
+            
+            case 6: //cancel
+                System.out.println("\nTransaction canceled. Returning to main menu...");
+                break;
+
+            default:
+                    System.out.println("\nInvalid choice. Returning to main menu...");
+                    break;
+            }
+        }
+    }
+
 
     public String getFacilitatorName() {
         return facilitatorName;
@@ -259,64 +332,7 @@ public void transactions() {
         System.out.println("============================================================================================================================================================================");
         System.out.println("");
     }
-
-    public void processTransactions(){
-
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-         System.out.println("Enter the Supply you would like to withdraw: ");
-         int supplyType = scanner.nextInt();
- 
-         System.out.println("Enter the quantity needed for the supply: ");
-         int supplyQuantity = scanner.nextInt();
- 
-         switch (supplyType){
-             case 1: //foods
-                 if (supplyQuantity <= food){
-                     food -= supplyQuantity; 
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
-                 }else{
-                         System.out.println("Insufficient Supplies");
-                } 
-
-             case 2: //water
-                 if (supplyQuantity <= water){
-                    food -= supplyQuantity;
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
-                 }else{
-                        System.out.println("Insufficient Supplies");
-                     }
- 
-             case 3: //medical supplies
-                 if (supplyQuantity <= medicalSupplies){
-                     medicalSupplies -= supplyQuantity; 
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + medicalSupplies);
-                 }else{
-                     System.out.println("Insufficient Supplies");
-                     }
- 
-             case 4: //clothing
-                     if (supplyQuantity <= clothing){
-                     clothing -= supplyQuantity; 
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + clothing);
-                 }else{
-                     System.out.println("Insufficient Supplies");
-                     }
- 
-             case 5: //others
-                 if (supplyQuantity <= othersQuantity){
-                     othersQuantity -= supplyQuantity; 
-                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + othersQuantity);
-                  }else{
-                     System.out.println("Insufficient Supplies");
-                    }   
-            }
-
-        }
-
-        
-    }
-
+   
     public void displayVolunteers(String filePath, String type){
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

@@ -136,14 +136,14 @@ public void transactions() {
             case 1: //foods
                 if (supplyQuantity <= food){
                     food -= supplyQuantity; 
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
+                    System.out.println("You have withdrawn " + supplyQuantity + " from food, " + "remaining supplies: " + food );
                 }else{
                         System.out.println("Insufficient Supplies");
                     }
             case 2: //water
                 if (supplyQuantity <= water){
                     water -= supplyQuantity;
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
+                    System.out.println("You have withdrawn " + supplyQuantity + " from water, " + "remaining supplies: " + water);
                 }else{
                         System.out.println("Insufficient Supplies");
                     }
@@ -151,7 +151,7 @@ public void transactions() {
             case 3: //medical supplies
                 if (supplyQuantity <= medicalSupplies){
                     medicalSupplies -= supplyQuantity; 
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + medicalSupplies);
+                    System.out.println("You have withdrawn " + supplyQuantity + " from medical supplies, " + "remaining supplies: " + medicalSupplies);
                 }else{
                     System.out.println("Insufficient Supplies");
                     }
@@ -159,7 +159,7 @@ public void transactions() {
             case 4: //clothing
                     if (supplyQuantity <= clothing){
                     clothing -= supplyQuantity; 
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + clothing);
+                    System.out.println("You have withdrawn " + supplyQuantity + " from clothing, " + " remaining supplies: " + clothing);
                 }else{
                     System.out.println("Insufficient Supplies");
                     }
@@ -167,7 +167,7 @@ public void transactions() {
             case 5: //others
                 if (supplyQuantity <= others){
                     others -= supplyQuantity; 
-                    System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
+                    System.out.println("You have withdrawn " + supplyQuantity +  " from others, " + "remaining supplies: " + others);
                 }else{
                     System.out.println("Insufficient Supplies");
                 }

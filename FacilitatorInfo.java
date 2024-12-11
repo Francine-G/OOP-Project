@@ -12,6 +12,12 @@ class Facilitator{
     private String[] disasterType;
     private int[] popSize;
     private double donatedCash;
+    private int food;
+    private int water;
+    private int medicalSupplies;
+    private int clothing;
+    private int others;
+
 
 
     public Facilitator(String facilitatorName, int pin, String[] location, String[] disasterType, int[] popSize, double donatedCash){
@@ -130,6 +136,12 @@ public void transactions() {
     }
 
     public void displayDisasterDetails(){
+
+        if (location == null || disasterType == null || popSize == null ||
+            location.length == 0 || disasterType.length == 0 || popSize.length == 0) {
+            System.out.println("There are no Disasters Recorded at the moment.");
+            return;
+        }
         
         System.out.println("\n======================================================================");
         System.out.println("         Location              Disaster             Population Size     ");
@@ -141,7 +153,55 @@ public void transactions() {
         
     }
 
-    public void displayInventories(int food, int water, int medicalSupplies, int clothing){
+    public void addDisasterDetails() {
+        Scanner scanner = new Scanner(System.in);
+    
+        System.out.println("Enter the location: ");
+        String newLocation = scanner.nextLine();
+    
+        System.out.println("Enter the disaster type: ");
+        String newDisasterType = scanner.nextLine();
+    
+        System.out.println("Enter the population size: ");
+        int newPopSize = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+    
+        // Dynamically extend arrays
+        location = addToArray(location, newLocation);
+        disasterType = addToArray(disasterType, newDisasterType);
+        popSize = addToIntArray(popSize, newPopSize);
+    
+        System.out.println("Disaster details added successfully.");
+    }
+    
+    // Helper method to add a string to a string array
+    private String[] addToArray(String[] array, String newElement) {
+        if (array == null) {
+            return new String[]{newElement};
+        }
+        String[] newArray = Arrays.copyOf(array, array.length + 1);
+        newArray[newArray.length - 1] = newElement;
+        return newArray;
+    }
+    
+    // Helper method to add an integer to an int array
+    private int[] addToIntArray(int[] array, int newElement) {
+        if (array == null) {
+            return new int[]{newElement};
+        }
+        int[] newArray = Arrays.copyOf(array, array.length + 1);
+        newArray[newArray.length - 1] = newElement;
+        return newArray;
+    }
+    
+
+    public void displayInventories(){
+
+        if (food == 0 || water == 0 || medicalSupplies == 0 || clothing == 0) {
+        System.out.println("There are no relief goods supplies stored at the moment.");
+        return;
+    }
+
         System.out.println(" ");
         System.out.println("\n=======================================================================================================================================================");
         System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
@@ -162,8 +222,62 @@ public void transactions() {
 
     public void processTransactions(){
 
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+         System.out.println("Enter the Supply you would like to withdraw: ");
+         int supplyType = scanner.nextInt();
+ 
+         System.out.println("Enter the quantity needed for the supply: ");
+         int supplyQuantity = scanner.nextInt();
+ 
+         switch (supplyType){
+             case 1: //foods
+                 if (supplyQuantity <= food ){
+                     food -= supplyQuantity; 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + food );
+                 }else{
+                         System.out.println("Insufficient Supplies");
+                } 
+                 
+              
+             case 2: //water
+                 if (supplyQuantity <= water){
+                     food -= supplyQuantity;
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + water);
+                 }else{
+                         System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 3: //medical supplies
+                 if (supplyQuantity <= medicalSupplies){
+                     medicalSupplies -= supplyQuantity; 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + medicalSupplies);
+                 }else{
+                     System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 4: //clothing
+                     if (supplyQuantity <= clothing){
+                     clothing -= supplyQuantity; 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + clothing);
+                 }else{
+                     System.out.println("Insufficient Supplies");
+                     }
+ 
+             case 5: //others
+                 if (supplyQuantity <= others){
+                     others -= supplyQuantity; 
+                     System.out.println("You have withdrawn" + supplyQuantity + "remaining supplies: " + others);
+                  }else{
+                     System.out.println("Insufficient Supplies");
+                    }   
+            }
+
+        }
         
     }
+        
+    
 
     public void displayVolunteers(){
        
@@ -231,24 +345,24 @@ public class FacilitatorInfo{
                 }
 
                 while (true) {
-                    System.out.println(" ");
                     System.out.println("\n====================================================================================================");
                     System.out.println("                                        FACILITATOR DASHBOARD                            ");
                     System.out.println("        |===== 1. View Transactions =====|                  |===== 2. View Inventories =====|");
                     System.out.println("      |===== 3. View Disaster Reports =====|            |===== 4. View Volunteers & Donors=====|");
+                    System.out.println("                         |===== 5. Add Disaster Details =====|                                  ");
                     System.out.println("=====================================================================================================");
                     System.out.println(" ");
-
+                
                     System.out.print("Enter your choice: ");
                     int choice = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
-
+                
                     switch (choice) {
                         case 1:
                             facilitator.processTransactions();
                             break;
                         case 2:
-                            facilitator.displayInventories(1000, 1000, 550, 450);
+                            facilitator.displayInventories();
                             break;
                         case 3:
                             facilitator.displayDisasterDetails();
@@ -256,10 +370,13 @@ public class FacilitatorInfo{
                         case 4:
                             facilitator.transactions();
                             break;
+                        case 5: // Add Disaster Details
+                            facilitator.addDisasterDetails();
+                            break;
                         default:
                             System.out.println("Invalid choice. Please try again.");
                     }
-
+                
                     System.out.println("");
                     System.out.println("Would you like to do another transaction? (yes/no) ");
                     String response = scanner.nextLine().toLowerCase();
@@ -270,15 +387,10 @@ public class FacilitatorInfo{
                         System.out.println("Invalid input. Returning to the dashboard.");
                     }
                 }
-            } else {
-                System.out.println("Facilitator not found.");
-                break;
             }
-        }
+        }                
         
-       
     }
 
-    
 }
 

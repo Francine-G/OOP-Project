@@ -119,11 +119,11 @@ public void transactions() {
     Scanner scanner = new Scanner (System.in);
         while (true) {
             System.out.println(" ");
-        System.out.println("\n==============================================================================================================================");
+        System.out.println("\n======================================================================================================================================================");
         System.out.println("                                                       RELIEF GOODS SUPPLIES                                ");
-        System.out.println("================================================================================================================================");
-        System.out.println("                   1.Foods             2.Water             3.Medical Supplies             4.Clothing               5.Others     ");
-        System.out.println("================================================================================================================================");
+        System.out.println("========================================================================================================================================================");
+        System.out.println("                   1.Foods             2.Water             3.Medical Supplies             4.Clothing               5.Others               6.Cancel      ");
+        System.out.println("========================================================================================================================================================");
         System.out.println(" ");
 
         System.out.println("Enter the Supply you would like to withdraw: ");
@@ -176,6 +176,14 @@ public void transactions() {
                     System.out.println("Insufficient Supplies");
                 }
                 break;
+            
+            case 6: //cancel
+                System.out.println("\nTransaction canceled. Returning to main menu...");
+                break;
+
+            default:
+                    System.out.println("\nInvalid choice. Returning to main menu...");
+                    break;
             }
         }
     }

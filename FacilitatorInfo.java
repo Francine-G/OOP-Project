@@ -106,7 +106,7 @@ public void transactions() {
 
         case 3: //trasaction process
 
-        case 3: // Cancel
+        case 4: // Cancel
             System.out.println("\nTransaction canceled. Returning to main menu...");
             break;
 

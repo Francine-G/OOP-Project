@@ -202,7 +202,7 @@ class DisasterDisplayInfo {
 
 public class VolunteerInfo {
     public static void main(String[] args) {
-        Scanner userInput = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         String name = "";
         String address = ""; 
@@ -213,27 +213,27 @@ public class VolunteerInfo {
         System.out.println("    |===== 1. Log-In =====|                   |===== 2. Sign Up =====|");
         System.out.println("=====================================================================================\n");
         System.out.print("Enter your choice: ");
-        int option = userInput.nextInt();
-        userInput.nextLine(); // Consume newline character
+        int option = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
 
         switch (option) {
             case 1: // Login
                 System.out.println("");
                 System.out.println("=====================================================================================\n");
                 System.out.print("Enter Username (Full Name): ");
-                name = userInput.nextLine();
+                name = scanner.nextLine();
 
                 String pass;
                 while (true) {
                     System.out.print("Enter Password (6-digits): ");
-                    pass = userInput.nextLine();
+                    pass = scanner.nextLine();
                     if (Volunteer.validatePassword(pass)) { 
                         System.out.println("Valid Password.\n");
 
                         while (true) {
-                            newContact = Volunteer.getValidInput(userInput, "Enter Contact Number (11-Digits): ", "\\d{11}");
+                            newContact = Volunteer.getValidInput(scanner, "Enter Contact Number (11-Digits): ", "\\d{11}");
                             System.out.print("Enter your Address: ");
-                            address = userInput.nextLine();
+                            address = scanner.nextLine();
                             break;
                         }
                         break;

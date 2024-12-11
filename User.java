@@ -1,4 +1,42 @@
+import java.io.*;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+class IDManager {
+    private static int currentID = 1;
+    private static final String ID_FILE_PATH = System.getProperty("user.home") +
+            System.getProperty("file.separator") + "Desktop" +
+            System.getProperty("file.separator") + "Java Family" +
+            System.getProperty("file.separator") + "IDCounter.txt";
+
+    static {
+        // Load the current ID from the file if it exists
+        try (Scanner scanner = new Scanner(new File(ID_FILE_PATH))) {
+            if (scanner.hasNextInt()) {
+                currentID = scanner.nextInt();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("ID file not found. Starting from ID 1.");
+        }
+    }
+
+    public static synchronized int getNextID() {
+        int nextID = currentID++;
+        saveCurrentID();
+        return nextID;
+    }
+
+    private static void saveCurrentID() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ID_FILE_PATH))) {
+            writer.write(String.valueOf(currentID));
+        } catch (IOException e) {
+            System.out.println("Error saving current ID: " + e.getMessage());
+        }
+    }
+}
 
 abstract class UserType {
     protected String userName;
@@ -10,7 +48,6 @@ abstract class UserType {
     public abstract void displayTypeDetails();
 }
 
-// Facilitator
 class Facilitator extends UserType {
     public Facilitator() {
         super("Facilitator");
@@ -18,11 +55,10 @@ class Facilitator extends UserType {
 
     @Override
     public void displayTypeDetails() {
-        System.out.println("Type: " + userName + " - Facilitates events and activities.");
+        System.out.println("Type: Facilitator - Facilitates events and activities.");
     }
 }
 
-// Donor
 class Donor extends UserType {
     public Donor() {
         super("Donor");
@@ -30,11 +66,10 @@ class Donor extends UserType {
 
     @Override
     public void displayTypeDetails() {
-        System.out.println("Type: " + userName + " - Provides financial or material support.");
+        System.out.println("Type: Donor - Provides financial or material support.");
     }
 }
 
-// Volunteer
 class Volunteer extends UserType {
     public Volunteer() {
         super("Volunteer");
@@ -42,11 +77,10 @@ class Volunteer extends UserType {
 
     @Override
     public void displayTypeDetails() {
-        System.out.println("Type: " + userName + " - Participates in on-ground activities.");
+        System.out.println("Type: Volunteer - Participates in on-ground activities.");
     }
 }
 
-// Log-in Class
 class LoginUser {
     private String userName;
     private String userPassword;
@@ -58,22 +92,23 @@ class LoginUser {
         this.userType = userType;
     }
 
-    public String getUsername() {
-        return userName;
-    }
-
-    public UserType getType() {
-        return userType;
-    }
-
-    public void displayLogin() {
-        System.out.println("Username: " + userName);
-        System.out.println("User Password: " + "******");
-        userType.displayTypeDetails();
+    public void saveToFile() {
+        int loginID = IDManager.getNextID();
+        String filePath = System.getProperty("user.home") +
+                System.getProperty("file.separator") + "Desktop" +
+                System.getProperty("file.separator") + "Java Family" +
+                System.getProperty("file.separator") + "UserDataBase.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write("Action: Login, ID " + String.format("%03d", loginID) +
+                    " - Name: " + userName + ", Username: " + userName +
+                    ", User Type: " + userType.getClass().getSimpleName() + "\n");
+            System.out.println("Login details saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving login details: " + e.getMessage());
+        }
     }
 }
 
-// SignUp Class 
 class SignUp {
     private String userName;
     private String firstName;
@@ -89,48 +124,54 @@ class SignUp {
         this.lastName = lastName;
         this.userContact = userContact;
         this.userType = userType;
+
+        if (!userPassword.matches("\\d{6}")) {
+            System.out.println("Invalid password. Password must be exactly 6 digits.");
+            return;
+        }
+
+        if (!userContact.matches("\\d{11}")) {
+            System.out.println("Invalid contact number. Please enter exactly 11 digits.");
+            return;
+        }
+
+        if (userType == null) {
+            System.out.println("Invalid user type selected. Please try again.");
+            return;
+        }
+
+        saveToFile();
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    public String getContact() {
-        return userContact;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void displaySignUpDetails() {
-        System.out.println("\nSign-Up Successful!");
-        System.out.println("Username: " + getUserName());
-        System.out.println("Full Name: " + getFullName());
-        System.out.println("Contact Number: " + getContact());
-        getUserType().displayTypeDetails();
+    public void saveToFile() {
+        int signUpID = IDManager.getNextID();
+        String filePath = System.getProperty("user.home") +
+                System.getProperty("file.separator") + "Desktop" +
+                System.getProperty("file.separator") + "Java Family" +
+                System.getProperty("file.separator") + "UserDataBase.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write("Action: Sign-Up, ID " + String.format("%03d", signUpID) +
+                    " - Name: " + firstName + " " + lastName + ", Username: " + userName +
+                    ", User Type: " + userType.getClass().getSimpleName() + "\n");
+            System.out.println("Sign-up details saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving sign-up details: " + e.getMessage());
+        }
     }
 }
 
-// Main class
 public class User {
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in);
 
-        System.out.println(" ");
-        System.out.println("          |===== 1. Login =====|                   |===== 2. Sign up =====|");
-        System.out.println(" ");
+        System.out.println("\n|===== 1. Login =====|                   |===== 2. Sign up =====|\n");
         System.out.print("Enter your choice: ");
         int option = userInput.nextInt();
-        userInput.nextLine(); 
+        userInput.nextLine();
 
         switch (option) {
             case 1:
-                System.out.print("Enter Username (Full Name): ");
+                System.out.print("Enter Username: ");
                 String loginName = userInput.nextLine();
 
                 System.out.print("Enter Password (6-Digits): ");
@@ -139,12 +180,10 @@ public class User {
                     loginPass = userInput.nextLine();
                     if (loginPass.matches("\\d{6}")) {
                         break;
-                    } else if (loginPass.length() > 6) {
-                        System.out.println("Invalid password. Password exceeds 6 digits.");
                     } else {
-                        System.out.println("Invalid password. Password is less than 6 digits.");
+                        System.out.println("Invalid password. Password must be exactly 6 digits.");
+                        System.out.print("Enter Password (6-Digits): ");
                     }
-                    System.out.print("Enter Password (6-Digits): ");
                 }
 
                 UserType loginType = selectType(userInput);
@@ -152,9 +191,8 @@ public class User {
 
                 LoginUser loginUser = new LoginUser();
                 loginUser.setLogin(loginName, loginPass, loginType);
-
                 System.out.println("\nLogin Successful!");
-                loginUser.displayLogin();
+                loginUser.saveToFile();
                 break;
 
             case 2:
@@ -167,12 +205,10 @@ public class User {
                     signUpPass = userInput.nextLine();
                     if (signUpPass.matches("\\d{6}")) {
                         break;
-                    } else if (signUpPass.length() > 6) {
-                        System.out.println("Invalid password. Password exceeds 6 digits.");
                     } else {
-                        System.out.println("Invalid password. Password is less than 6 digits.");
+                        System.out.println("Invalid password. Password must be exactly 6 digits.");
+                        System.out.print("Create a Password (6-Digits): ");
                     }
-                    System.out.print("Create a Password (6-Digits): ");
                 }
 
                 System.out.print("Enter First Name: ");
@@ -197,7 +233,6 @@ public class User {
                 if (signUpType == null) break;
 
                 SignUp signUpUser = new SignUp(signUpName, signUpPass, firstName, lastName, contact, signUpType);
-                signUpUser.displaySignUpDetails();
                 break;
 
             default:
@@ -215,7 +250,7 @@ public class User {
         System.out.println("3. Volunteer");
         System.out.print("Enter your type (1/2/3): ");
         int typeChoice = userInput.nextInt();
-        userInput.nextLine(); 
+        userInput.nextLine();
 
         switch (typeChoice) {
             case 1:

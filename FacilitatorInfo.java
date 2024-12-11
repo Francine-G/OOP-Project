@@ -101,7 +101,7 @@ public void transactions() {
                 System.out.println("\nInvalid choice. Returning to main menu...");
             }
             break;
-            
+
         case 3: //trasaction process
 
         case 4: // Cancel
